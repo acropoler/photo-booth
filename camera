@@ -1,0 +1,18 @@
+from picamera import PiCamera
+from time import sleep
+from gpiozero import Button
+picnum = 0
+picname = str(picnum)
+button = Button(17)
+camera = PiCamera()
+
+camera.start_preview()
+while picnum < 5:
+    button.wait_for_press()
+    sleep(1)
+    #camera.capture('/home/pi/Desktop/image'+picname+'.jpg')
+    picnum=picnum+1
+    picname = str(picnum)
+    camera.capture('/home/pi/Desktop/image'+picname+'.jpg')
+camera.stop_preview()
+exit()
