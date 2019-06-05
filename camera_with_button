@@ -1,0 +1,19 @@
+import os
+import RPi.GPIO as GPIO
+from picamera import PiCamera
+from time import sleep
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(23, GPIO.IN, pull_up_down = GPIO.PUD_UP)
+camera=PiCamera()
+
+while True:
+    GPIO.wait_for_edge(23, GPIO.RISING)
+    list = os.listdir('/home/pi/Desktop/ttatc slides')
+    number_files = len(list)
+    image_name=str(number_files)
+    camera.start_preview()
+    sleep(2)
+    mypics="/home/pi/Desktop/ttatc slides/"+image_name+".jpg"
+    camera.capture(mypics)
+    camera.stop_preview()
+GPIO.cleanup()
