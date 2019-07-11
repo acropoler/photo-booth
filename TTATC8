@@ -8,7 +8,7 @@ import time
 import RPi.GPIO as GPIO
 from pygame.locals import *
 pixel_pin = board.D18
-num_pixels = 7
+num_pixels = 12
 ORDER = neopixel.GRB
 pixels = neopixel.NeoPixel(pixel_pin, num_pixels, brightness=1.0, auto_write=False, pixel_order=ORDER)
 camera=PiCamera()
@@ -17,6 +17,7 @@ pygame.font.init()
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(23, GPIO.IN, pull_up_down = GPIO.PUD_UP)
 GPIO.setup(4, GPIO.IN, pull_up_down = GPIO.PUD_UP)
+GPIO.setup(17, GPIO.IN, pull_up_down = GPIO.PUD_UP)
 black=(0,0,0)
 white=(255,255,255)
 running=True
@@ -120,6 +121,11 @@ while running:
         pixels[4]=(0, 0, 0)
         pixels[5]=(0, 0, 0)
         pixels[6]=(0, 0, 0)
+        pixels[7]=(0, 0, 0)
+        pixels[8]=(0, 0, 0)
+        pixels[9]=(0, 0, 0)
+        pixels[10]=(0, 0, 0)
+        pixels[11]=(0, 0, 0)
         pixels.show() 
         time.sleep(.1)
         list = os.listdir('/home/pi/Desktop/ttatc slides')
@@ -138,6 +144,11 @@ while running:
         pygame.display.update()
         
     if GPIO.input(23)==0:
+        font = pygame.font.SysFont("comicsansms", 18)
+        text = font.render("This is a test of button 23", True, (255, 255, 255))
+        gamewindow.fill((black))
+        gamewindow.blit(text,(40, 22))
+        pygame.display.update()
         print("button 23 worked")
         list = os.listdir('/home/pi/Desktop/ttatc slides')
         number_files = len(list)
